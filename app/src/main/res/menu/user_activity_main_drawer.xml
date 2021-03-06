@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Uhome"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_UViewAttendance"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/view_attendance" />
+        <item
+            android:id="@+id/nav_UchangePassword"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/change_password" />
+
+        <item
+            android:id="@+id/nav_Ulogout"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/logout" />
+
+    </group>
+</menu>

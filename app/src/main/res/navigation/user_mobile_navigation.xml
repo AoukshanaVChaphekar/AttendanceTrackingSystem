@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_Uhome">
+
+    <fragment
+        android:id="@+id/nav_Uhome"
+        android:name="com.example.attendancetrackingsystem.UserUi.homeFragment"
+        android:label="Home"
+        tools:layout="@layout/user_fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_UViewAttendance"
+        android:name="com.example.attendancetrackingsystem.UserUi.viewAttendance_fragment"
+        android:label="View Attendance"
+        tools:layout="@layout/user_view_attendance_fragment" />
+    <fragment
+        android:id="@+id/nav_UchangePassword"
+        android:name="com.example.attendancetrackingsystem.UserUi.changePassword_fragment"
+        android:label="Change Password"
+        tools:layout="@layout/user_change_password_fragment" />
+
+    <fragment
+        android:id="@+id/nav_Ulogout"
+        android:name="com.example.attendancetrackingsystem.UserUi.logout_fragment"
+        android:label="Logout"
+        tools:layout="@layout/user_logout_fragment" />
+
+
+</navigation>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserUi.homeFragment">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:textSize="28sp"
+        android:id="@+id/nameTextView"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:textSize="28sp"
+        android:id="@+id/nameEditText"
+        android:layout_below="@+id/nameTextView"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#686A6A"
+        android:layout_below="@+id/nameEditText"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contact"
+        android:textSize="28sp"
+        android:id="@+id/contactTextView"
+        android:layout_below="@+id/nameEditText"
+        android:layout_marginTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="contact"
+        android:textSize="28sp"
+        android:id="@+id/contactEditText"
+        android:layout_below="@+id/contactTextView"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#686A6A"
+        android:layout_below="@+id/contactEditText"
+        android:layout_marginTop="5dp"
+        android:id="@+id/divider"
+        android:layout_marginBottom="25dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/course"
+        android:layout_below="@+id/divider"
+        android:text="Course Detials"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        />
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:hint="Code"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:id="@+id/courseCode"
+        android:layout_below="@+id/course"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="15dp"
+        />
+
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:textSize="24sp"
+        android:id="@+id/courseName"
+        android:layout_below="@+id/course"
+        android:layout_toEndOf="@+id/courseCode"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/courseCode" />
+    <TextView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="Faculty"
+        android:textSize="24sp"
+        android:id="@+id/faculty"
+        android:layout_below="@+id/course"
+        android:layout_toEndOf="@+id/courseName"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="50dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/courseName" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/courseName"
+        android:layout_marginTop="40dp"
+        android:id="@+id/studentDataRv"
+        tools:listitem="@layout/user_home_fragment_list_row"
+        />
+
+</RelativeLayout>
+
+</FrameLayout>

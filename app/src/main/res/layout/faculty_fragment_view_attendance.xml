@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Facultyui.ViewAttendanceFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/startLayout"
+            >
+           <EditText
+               android:layout_width="320dp"
+               android:layout_height="wrap_content"
+               android:id="@+id/startDate"
+               android:hint="Start Date"
+               />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_share"
+                android:layout_toEndOf="@+id/startDate"
+                android:layout_toRightOf="@+id/startDate" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:id="@+id/endLayout"
+            >
+            <EditText
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/endDate"
+                android:hint="End Date"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_share"
+                android:layout_toEndOf="@+id/endDate"
+                android:layout_toRightOf="@+id/endDate" />
+
+        </RelativeLayout>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/spinnerViewAtt"
+        android:background="@android:drawable/btn_dropdown"
+        />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Get Attendance"
+            android:background="@color/blueBackground"
+            android:id="@+id/getAttendanceButton"
+
+
+            />
+    </LinearLayout>
+</FrameLayout>

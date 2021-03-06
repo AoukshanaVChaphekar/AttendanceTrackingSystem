@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.attendancetrackingsystem.Facultyui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/faculty_fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_student"
+        android:name="com.example.attendancetrackingsystem.Facultyui.Students.StudentFragment"
+        android:label="Students"
+        tools:layout="@layout/faculty_fragment_students" />
+
+    <fragment
+        android:id="@+id/nav_TakeAttendance"
+        android:name="com.example.attendancetrackingsystem.Facultyui.TakeAttendance.TakeAttendanceFragment"
+        android:label="Take Attendance"
+        tools:layout="@layout/faculty_fragment_take_attendance" />
+    <fragment
+        android:id="@+id/nav_ViewAttendance"
+        android:name="com.example.attendancetrackingsystem.Facultyui.ViewAttendanceFragment"
+        android:label="View Attendance"
+        tools:layout="@layout/faculty_fragment_view_attendance" />
+    <fragment
+        android:id="@+id/nav_changePassword"
+        android:name="com.example.attendancetrackingsystem.Facultyui.changePasswordFragment"
+        android:label="Change Password"
+        tools:layout="@layout/faculty_fragment_change_password" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.attendancetrackingsystem.Facultyui.logout_fragment"
+        android:label="Logout"
+        tools:layout="@layout/faculty_logout_fragment" />
+
+
+</navigation>
