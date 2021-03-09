@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:hint="absent"
         android:textSize="20sp"
-        android:layout_margin="10dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/presentIdText"
         />
 
@@ -28,7 +28,8 @@
         android:layout_height="wrap_content"
         android:hint="present"
         android:textSize="20sp"
-        android:layout_margin="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/absentIdText"
         />
 </LinearLayout>

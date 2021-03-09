@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminUi.AddUser.AddUserFragment"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -14,6 +15,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/recyclerView1"
+        android:layout_margin="10dp"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabButton"
@@ -23,8 +25,9 @@
         app:srcCompat="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/blueBackground"
-        android:backgroundTint="@color/blueBackground"
+        android:tint="@color/cardview_light_background"
+        android:backgroundTint="@color/black"
+        android:layout_margin="20dp"
 
         />
 

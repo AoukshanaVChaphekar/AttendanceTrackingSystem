@@ -3,25 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/group7">
         <item
             android:id="@+id/nav_Uhome"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-
+            android:title="@string/menu_home"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group8">
         <item
             android:id="@+id/nav_UViewAttendance"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/view_attendance" />
+            android:title="@string/view_attendance"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group9">
         <item
             android:id="@+id/nav_UchangePassword"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/change_password" />
-
+            android:title="@string/change_password"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group10">
         <item
             android:id="@+id/nav_Ulogout"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/logout" />
-
+            android:title="@string/logout"
+            android:menuCategory="secondary"
+            />
     </group>
 </menu>

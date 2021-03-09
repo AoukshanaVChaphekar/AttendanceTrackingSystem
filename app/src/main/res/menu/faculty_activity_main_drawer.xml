@@ -3,33 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group1">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_home"
+            android:menuCategory="secondary"
+            /></group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group2">
         <item
             android:id="@+id/nav_student"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/students" />
+            android:title="@string/students"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group3">
         <item
             android:id="@+id/nav_TakeAttendance"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/take_attendance" />
-
+            android:title="@string/take_attendance"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group4">
         <item
             android:id="@+id/nav_ViewAttendance"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/view_attendance" />
+            android:title="@string/view_attendance"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group5">
         <item
             android:id="@+id/nav_changePassword"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/change_password" />
-
-        <item
+            android:title="@string/change_password"
+            android:menuCategory="secondary"
+            />
+    </group>
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/group6">
+         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/logout" />
+            android:title="@string/logout"
+             android:menuCategory="secondary"
+             />
 
     </group>
 </menu>

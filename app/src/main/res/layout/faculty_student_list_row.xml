@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/UserIdTextView"
             android:text="User id"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:layout_margin="5dp"
             />
         <View
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/contactTextView"
             android:text="Contact"
-            android:textSize="28sp"
+            android:textSize="24sp"
             android:layout_margin="5dp"
             />
 

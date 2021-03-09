@@ -38,8 +38,17 @@ public class viewAttendanceAdapter extends RecyclerView.Adapter<viewAttendanceAd
     public void onBindViewHolder(@NonNull viewAttendanceViewHolder holder, int position) {
         AttendanceTrack user=attendanceTrackArrayList.get(position);
         holder.studentId.setText(user.getUserId());
-        int percentPresent=(user.getPresentCount()*100)/user.getTotalCount();
-        int percentAbsent=(user.getAbsentCount()*100)/user.getTotalCount();
+        double percentPresent=(double)(user.getPresentCount()*100)/user.getTotalCount();
+        double percentAbsent=(double)(user.getAbsentCount()*100)/user.getTotalCount();
+
+        percentPresent = percentPresent * Math.pow(10,2);
+        percentPresent = Math.floor(percentPresent);
+        percentPresent = percentPresent / Math.pow(10,2);
+
+        percentAbsent = percentAbsent * Math.pow(10,2);
+        percentAbsent = Math.floor(percentAbsent);
+        percentAbsent = percentAbsent / Math.pow(10,2);
+
         holder.present.setText(user.getPresentCount()+"("+percentPresent+"%)");
         holder.absent.setText(user.getAbsentCount()+"("+percentAbsent+"%)");
 

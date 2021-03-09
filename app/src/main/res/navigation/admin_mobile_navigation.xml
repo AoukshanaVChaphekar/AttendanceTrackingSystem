@@ -9,6 +9,7 @@
         android:id="@+id/nav_User"
         android:name="com.example.attendancetrackingsystem.AdminUi.AddUser.AddUserFragment"
         android:label="User"
+
         tools:layout="@layout/admin_fragment_user" />
 
     <fragment
@@ -22,5 +23,10 @@
         android:name="com.example.attendancetrackingsystem.AdminUi.AddSubject.AddSubjectFragment"
         android:label="Subject"
         tools:layout="@layout/admin_fragment_subject" />
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.example.attendancetrackingsystem.admin_logout_fragment"
+        android:label="Subject"
+        tools:layout="@layout/fragment_admin_logout_fragment" />
 
 </navigation>

@@ -20,6 +20,7 @@
             android:id="@+id/radioButton"
             android:scaleX="1.5"
             android:scaleY="1.5"
+            android:buttonTint="@color/black"
 
             />
 
@@ -32,7 +33,8 @@
             android:layout_marginLeft="5dp"
 
 
-            />
+
+            android:layout_toRightOf="@+id/radioButton" />
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

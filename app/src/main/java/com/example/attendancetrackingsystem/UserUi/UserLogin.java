@@ -44,21 +44,26 @@ public class UserLogin extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
-                auth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressDialog.dismiss();
-                            if(task.isSuccessful())
-                            {
-                                //start activity
-                                startActivity(new Intent(UserLogin.this,UserMainActivity.class));
-                            }
-                            else
-                                Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
 
+                if (email.getText().toString().trim().length() > 0 && password.getText().toString().trim().length() > 0) {
+                    progressDialog.show();
+                    auth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
+                                //start activity
+                                startActivity(new Intent(UserLogin.this, UserMainActivity.class));
+                            } else
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"Please enter credentials",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

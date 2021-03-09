@@ -24,8 +24,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public class add_subject_activiity extends AppCompatActivity {
+public class add_subject_activiity extends AppCompatActivity implements AddSubjectAdapter.facultySelectedItemListener {
 
     EditText subjectName;
     EditText subjectCode;
@@ -36,9 +39,10 @@ public class add_subject_activiity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference databaseReference;
-    ArrayList<String> facultyId;
+    ArrayList<String> facultyId=new ArrayList<>();
+    public ArrayList<String> fid=new ArrayList<>();
 
-    String fid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class add_subject_activiity extends AppCompatActivity {
         subjectCode=findViewById(R.id.SubjectCodeEditText);
         subjectName=findViewById(R.id.SubjectNameEditText);
 
-        facultyId=new ArrayList<>();
 
         addSubjectButton=findViewById(R.id.addSubjectButton);
 
@@ -55,18 +58,108 @@ public class add_subject_activiity extends AppCompatActivity {
               progressDialog.setTitle("Adding Subject");
               progressDialog.setMessage("Subject is being added");
 
+        getIds(new facultyCallBack() {
+            @Override
+            public void onCallBack(ArrayList<String> list) {
+                facultyId=list;
+                recyclerView=findViewById(R.id.SubjectrecyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                addSubjectAdapter= new AddSubjectAdapter(facultyId,add_subject_activiity.this);
+                recyclerView.setAdapter(addSubjectAdapter);
 
+            }
+        });
+        final boolean[] flag = {false};
+
+
+
+
+        addSubjectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (subjectCode.getText().toString().trim().length() > 0 && subjectName.getText().toString().trim().length() > 0
+                        && fid.size() > 0) {
+                    String Ids= String.valueOf(fid);
+                    Ids=Ids.substring(1,Ids.length()-1);
+                    Log.d("Fid", Ids);
+
+                    String newCode= subjectCode.getText().toString();
+                    String subName=subjectName.getText().toString();
+                    final String[] id = new String[1];
+                    progressDialog.show();
+                    databaseReference=FirebaseDatabase.getInstance().getReference().child("Subject");
+                    String finalIds = Ids;
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d("Fid ", String.valueOf(finalIds));
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren())
+                            {
+                                if (dataSnapshot.child("code").getValue().toString().equals(newCode))
+                                {
+                                    id[0] = dataSnapshot.getKey();
+                                    flag[0] = true;
+                                    break;
+                                }
+                            }
+                            if (flag[0])
+                            {
+
+                                databaseReference.child(id[0]).child("code").setValue(newCode);
+                                databaseReference.child(id[0]).child("name").setValue(subName);
+                                databaseReference.child(id[0]).child("fid").setValue(Arrays.asList(finalIds));
+                            }
+                            else
+                                {
+
+                                    Subject subject = new Subject(subName, newCode,new ArrayList<String>(Arrays.asList(finalIds)));
+                                    database.getReference().child("Subject").push().setValue(subject, new DatabaseReference.CompletionListener() {
+                                    @Override
+                                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref)
+                                    {
+                                        if (error != null)
+                                            Toast.makeText(getApplicationContext(), "Error occured while adding subject", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    progressDialog.dismiss();
+                    subjectCode.setText("");
+                    subjectName.setText("");
+                    fid.clear();
+                    Toast.makeText(getApplicationContext(), "Subject Added Successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "Please fill all details", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public void getIds(facultyCallBack callBack)
+    {
+        ArrayList<String> list=new ArrayList<>();
         database=FirebaseDatabase.getInstance();
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Faculty");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                facultyId.clear();
+                list.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren())
                 {
                     String id=dataSnapshot.child("fid").getValue().toString();
-                    facultyId.add(id);
+                    list.add(id);
+
                 }
+                callBack.onCallBack(list);
                 addSubjectAdapter.notifyDataSetChanged();
 
 
@@ -77,37 +170,15 @@ public class add_subject_activiity extends AppCompatActivity {
             }
         });
 
-        recyclerView=findViewById(R.id.SubjectrecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        addSubjectAdapter= new AddSubjectAdapter(facultyId);
+    }
 
-        recyclerView.setAdapter(addSubjectAdapter);
-
-        ArrayList<String> fid=addSubjectAdapter.getid();
-
-
-        addSubjectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressDialog.show();
-
-
-                Subject subject=new Subject(subjectName.getText().toString(),subjectCode.getText().toString(),fid);
-
-                        database.getReference().child("Subject").push().setValue(subject, new DatabaseReference.CompletionListener() {
-                            @Override
-                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                if(error!=null)
-                                    Toast.makeText(getApplicationContext(),"Error occured while adding subject",Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                        progressDialog.dismiss();
-                        subjectCode.setText("");
-                        subjectName.setText("");
-                        fid.clear();
-                        Toast.makeText(getApplicationContext(), "Subject Added Successfully!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(add_subject_activiity.this,AddSubjectFragment.class));
-            }
-        });
+    @Override
+    public void onItemClicked(ArrayList<String> list)
+    {
+        fid=list;
+    }
+    public interface facultyCallBack
+    {
+        void onCallBack(ArrayList<String> list);
     }
 }

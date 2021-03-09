@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdminLogin"
-    android:background="#A8D7FD"
+    android:background="@color/cardview_light_background"
     android:orientation="vertical"
     >
 
@@ -27,10 +27,10 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/image"
+            android:layout_width="71dp"
             android:layout_height="match_parent"
-            android:src="@drawable/abc_vector_test"
-            android:id="@+id/image"/>
+            android:src="@drawable/logo" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,6 +39,14 @@
             android:id="@+id/trackSystem"
             />
     </LinearLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="@dimen/activity_horizontal_margin"
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,12 +93,12 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/SubjectrecyclerView"
             android:layout_width="wrap_content"
-            android:layout_height="123dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="5dp"
-            tools:listitem="@layout/Admin_add_subject_list_row"
+            tools:listitem="@layout/admin_add_subject_list_row"
 
 
             />
@@ -101,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="#00BCD4"
+            android:background="#010B0C"
             android:text="Add Subject"
             android:layout_marginTop="30dp"
             android:textColor="#F4F0F8"
@@ -115,5 +123,6 @@
 
 
     </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

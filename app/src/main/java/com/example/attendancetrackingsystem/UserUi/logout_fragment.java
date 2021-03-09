@@ -18,15 +18,12 @@ public class logout_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        startActivity(new Intent(getContext(), MainActivity.class));
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                NavHostFragment.findNavController(com.example.attendancetrackingsystem.UserUi.logout_fragment.this).navigateUp();
-                //setEnabled(false); // call this to disable listener
-                //remove(); // call to remove listener
-                //Toast.makeText(getContext(), "Listing for back press from this fragment", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //startActivity(new Intent(getContext(), MainActivity.class));
+       // getActivity().finish();
+
+        Intent loginscreen=new Intent(getContext(),MainActivity.class);
+        loginscreen.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(loginscreen);
+        getActivity().finish();
         return null;    }
 }

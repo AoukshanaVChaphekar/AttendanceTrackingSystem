@@ -102,15 +102,16 @@ public class HomeFragment extends Fragment {
 
         homeFragmentAdapter=new homeFragmentAdapter(subjectArrayList);
         recyclerView.setAdapter(homeFragmentAdapter);
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
             @Override
             public void handleOnBackPressed() {
-                NavHostFragment.findNavController(HomeFragment.this).navigateUp();
-                //setEnabled(false); // call this to disable listener
-                //remove(); // call to remove listener
-                //Toast.makeText(getContext(), "Listing for back press from this fragment", Toast.LENGTH_SHORT).show();
+                // Handle the back button event
+                //Do nothing
             }
-        });
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+        callback.isEnabled();
+
 
         return root;
     }

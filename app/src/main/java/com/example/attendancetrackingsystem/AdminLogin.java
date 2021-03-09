@@ -50,26 +50,25 @@ public class AdminLogin extends AppCompatActivity  {
         adminsignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
-                auth.signInWithEmailAndPassword(adminemail.getText().toString(),adminpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            startActivity(new Intent(AdminLogin.this, AdminMainActivity.class));
+                if (adminemail.getText().toString().trim().length() > 0 && adminpassword.getText().toString().trim().length() > 0) {
+                    progressDialog.show();
+                    auth.signInWithEmailAndPassword(adminemail.getText().toString(), adminpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                startActivity(new Intent(AdminLogin.this, AdminMainActivity.class));
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
 
 
-
-
-
-
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "Please enter details", Toast.LENGTH_SHORT).show();
             }
         });
     }

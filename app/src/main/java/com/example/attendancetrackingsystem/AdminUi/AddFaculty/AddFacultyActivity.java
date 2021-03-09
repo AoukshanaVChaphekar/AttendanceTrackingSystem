@@ -61,36 +61,44 @@ public class AddFacultyActivity extends AppCompatActivity {
         FAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
-                auth.createUserWithEmailAndPassword(Femail.getText().toString(),Fpassword.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressDialog.dismiss();
-                                if(task.isSuccessful())
-                                {
-                                    Faculty faculty=new Faculty(Fid.getText().toString(),FFname.getText().toString(),FLname.getText().toString(),Fpassword.getText().toString(),
-                                            Femail.getText().toString(),FMobNo.getText().toString());
+                if (FFname.getText().toString().trim().length()>0 &&
+                        FFname.getText().toString().trim().length()>0 &&
+                        FLname.getText().toString().trim().length()>0 &&
+                        FMobNo.getText().toString().trim().length()>0 &&
+                        Femail.getText().toString().trim().length()>0 &&
+                        Fpassword.getText().toString().trim().length()>0
+                ) {
+                    progressDialog.show();
+                    auth.createUserWithEmailAndPassword(Femail.getText().toString(), Fpassword.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressDialog.dismiss();
+                                    if (task.isSuccessful()) {
+                                        Faculty faculty = new Faculty(Fid.getText().toString(), FFname.getText().toString(), FLname.getText().toString(), Fpassword.getText().toString(),
+                                                Femail.getText().toString(), FMobNo.getText().toString());
 
-                                    database.getReference().child("Faculty").push().setValue(faculty);
-                                    Femail.setText("");
-                                    Fid.setText("");
-                                    Fpassword.setText("");
-                                    FFname.setText("");
-                                    FLname.setText("");
-                                    FMobNo.setText("");
+                                        database.getReference().child("Faculty").push().setValue(faculty);
+                                        Femail.setText("");
+                                        Fid.setText("");
+                                        Fpassword.setText("");
+                                        FFname.setText("");
+                                        FLname.setText("");
+                                        FMobNo.setText("");
 
-                                    Toast.makeText(getApplicationContext(),"Faculty Created Successfully!",Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(AddFacultyActivity.this, AddFacultyFragment.class));
+                                        Toast.makeText(getApplicationContext(), "Faculty Created Successfully!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                      //  startActivity(new Intent(AddFacultyActivity.this, AddFacultyFragment.class));
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
-                                else
-                                {
-                                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                                }
+                            });
 
-                            }
-                        });
-
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please enter all details", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Facultyui.viewAttendanceCourseWise"
-    android:background="#71797A"
+    android:background="@color/background"
     >
 
 <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/cardViewText"
             android:text="Hello"
-            android:textSize="32sp"
+            android:textSize="24sp"
             android:layout_margin="5dp"
             />
     </androidx.cardview.widget.CardView>
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:text="Code"
             android:layout_margin="5dp"
-            android:textSize="36sp"
+            android:textSize="26sp"
             android:id="@+id/codeText"
             />
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Student"
                 android:layout_margin="5dp"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:id="@+id/studentText"
                 android:textStyle="bold"
                 android:layout_below="@+id/codeText"
@@ -67,7 +67,8 @@
                 android:layout_height="wrap_content"
                 android:text="Present"
                 android:layout_marginLeft="15dp"
-                android:textSize="28sp"
+                android:textSize="24sp"
+                android:layout_marginTop="5dp"
                 android:id="@+id/presentText"
                 android:textStyle="bold"
                 android:layout_below="@+id/codeText"
@@ -78,10 +79,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Absent"
-                android:layout_marginLeft="45dp"
-                android:textSize="28sp"
+                android:layout_marginLeft="25dp"
+                android:textSize="24sp"
                 android:id="@+id/absentText"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/codeText"
                 android:layout_toRightOf="@+id/presentText"
                 />

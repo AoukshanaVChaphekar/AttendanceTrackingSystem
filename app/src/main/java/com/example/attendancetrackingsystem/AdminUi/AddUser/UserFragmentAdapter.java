@@ -40,7 +40,9 @@ public class UserFragmentAdapter extends RecyclerView.Adapter<UserFragmentAdapte
         User user=userArrayList.get(position);
         Log.d("uid",user.getUserid());
         holder.id.setText("Id: "+user.getUserid());
-        holder.courses.setText("Course: "+user.getSubjects());
+        String list=user.getSubjects().get(0);
+        list=list.substring(1,list.length()-1);
+        holder.courses.setText("Course: "+list);
     }
 
     @Override

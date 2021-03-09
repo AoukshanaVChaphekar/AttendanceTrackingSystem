@@ -33,7 +33,8 @@ public class AddSubjectFragmentAdapter extends RecyclerView.Adapter<AddSubjectFr
     public void onBindViewHolder(@NonNull AddSubjectFragmentViewholder holder, int position) {
             Subject subject=subjectArrayList.get(position);
             holder.code.setText("Code:"+subject.getCode());
-            holder.facultyId.setText("FacultyId:"+subject.getFid());
+            String s= String.valueOf(subject.getFid());
+            holder.facultyId.setText("FacultyId:"+s.substring(1,s.length()-1));
     }
 
     @Override

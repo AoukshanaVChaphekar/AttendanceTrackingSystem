@@ -43,23 +43,28 @@ public class FacultyLogin extends AppCompatActivity {
         Flogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
-                auth.signInWithEmailAndPassword(Femail.getText().toString(),Fpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())
-                        {
-                            progressDialog.dismiss();
-                            startActivity(new Intent(FacultyLogin.this, FacultyMainActivity.class));
-                        }
-                        else {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                if (Femail.getText().toString().trim().length() > 0 && Fpassword.getText().toString().trim().length() > 0) {
+                    progressDialog.show();
+                    auth.signInWithEmailAndPassword(Femail.getText().toString(), Fpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                startActivity(new Intent(FacultyLogin.this, FacultyMainActivity.class));
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
 
-                });
+                    });
+                }
+
+            else
+                {
+                    Toast.makeText(getApplicationContext(),"Please enter all details", Toast.LENGTH_SHORT).show();
             }
+        }
         });
 
 

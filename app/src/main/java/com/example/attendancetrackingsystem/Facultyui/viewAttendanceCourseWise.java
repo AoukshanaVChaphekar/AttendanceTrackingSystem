@@ -27,6 +27,7 @@ import java.util.Objects;
 
 public class viewAttendanceCourseWise extends AppCompatActivity {
     TextView textView;
+    TextView codeTextView;
     RecyclerView recyclerView;
     viewAttendanceAdapter adapter;
 
@@ -49,13 +50,16 @@ public class viewAttendanceCourseWise extends AppCompatActivity {
         String code=getIntent().getStringExtra("code");
         DateFormat df =new SimpleDateFormat("dd/MM/yyyy");
 
+
         try {
             endDate1=df.parse(endDate);
             startDate1=df.parse(startDate);
-            Log.d("endddddd", String.valueOf(endDate1));
-        } catch (ParseException e) {
+         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        codeTextView=findViewById(R.id.codeText);
+        codeTextView.setText(code);
 
         textView=findViewById(R.id.cardViewText);
         textView.setText("Attendance report from "+startDate+" to "+endDate+" for course "+code);
@@ -105,8 +109,7 @@ public class viewAttendanceCourseWise extends AppCompatActivity {
 
                                     }
                                     attendanceTrackArrayList.add(new AttendanceTrack(userId,trueCount,falseCount,count));
-                                    Log.d("Data user",userId+trueCount+falseCount+count);
-                                    count=0;
+                                     count=0;
                                     trueCount=0;
                                     falseCount=0;
                                     adapter.notifyDataSetChanged();

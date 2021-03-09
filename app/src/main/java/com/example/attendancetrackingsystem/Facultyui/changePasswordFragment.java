@@ -53,41 +53,63 @@ public class changePasswordFragment extends Fragment {
 
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         String email= firebaseUser.getEmail();
+
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("Faculty");
+
     submit.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            AuthCredential credential = EmailAuthProvider.getCredential(email,oldpassword.getText().toString());
+            if (oldpassword.getText().toString().trim().length() > 0 && newpassword.getText().toString().trim().length()>0 &&newpassword.getText().toString().equals(confirmpassword.getText().toString())) {
+                AuthCredential credential = EmailAuthProvider.getCredential(email, oldpassword.getText().toString());
 
-            firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
-                        firebaseUser.updatePassword(newpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if(!task.isSuccessful()){
-                                    Toast.makeText(getContext(),"Something went wrong.Please try again",Toast.LENGTH_SHORT).show();
-                                }else {
-                                    Toast.makeText(getContext(),"Password updated successfully.",Toast.LENGTH_SHORT).show();
+                firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            firebaseUser.updatePassword(newpassword.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(getContext(), "Something went wrong.Please try again", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for(DataSnapshot dataSnapshot:snapshot.getChildren())
+                                                {
+                                                    String id=dataSnapshot.getKey();
+                                                    Log.d("email",dataSnapshot.child("email").getValue().toString());
+                                                    if(dataSnapshot.child("email").getValue().toString().equalsIgnoreCase(email))
+                                                    {
+                                                        databaseReference.child(id).child("password").setValue(newpassword.getText().toString());
+                                                         }
+
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+                                                Log.d("Database error",error.getMessage());
+                                            }
+                                        });
+
+                                        Toast.makeText(getContext(), "Password updated successfully.", Toast.LENGTH_SHORT).show();
+
+                                    }
                                 }
-                            }
-                        });
-                    }else {
-                        Toast.makeText(getContext(),"Authentication Failed",Toast.LENGTH_SHORT).show();
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "Authentication Failed", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-            });
+                });
+            }
+            else
+            {
+                Toast.makeText(getContext(), "Enter Correct Credentials", Toast.LENGTH_SHORT).show();
+            }
         }
     });
-        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                NavHostFragment.findNavController(changePasswordFragment.this).navigateUp();
-                //setEnabled(false); // call this to disable listener
-                //remove(); // call to remove listener
-                //Toast.makeText(getContext(), "Listing for back press from this fragment", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         return root;
     }

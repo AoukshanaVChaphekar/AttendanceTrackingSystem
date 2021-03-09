@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.attendancetrackingsystem.AdminMainActivity;
 import com.example.attendancetrackingsystem.Models.Subject;
 import com.example.attendancetrackingsystem.Models.User;
 import com.example.attendancetrackingsystem.R;
@@ -107,36 +110,52 @@ public class user_add extends AppCompatActivity implements AdminlistItemClicked 
         userAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.show();
-                auth.createUserWithEmailAndPassword(useremail.getText().toString(),userpassword.getText().toString())
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                progressDialog.dismiss();
-                                if(task.isSuccessful())
-                                {
-                                    User user=new User(userid.getText().toString(),useremail.getText().toString(),userpassword.getText().toString(),
-                                            userFname.getText().toString(),userLname.getText().toString(),userMobNo.getText().toString(),selectedItems);
-                                    String id=task.getResult().getUser().getUid();
-                                    database.getReference().child("Users").child(id).setValue(user);
-                                    useremail.setText("");
-                                    userid.setText("");
-                                    userpassword.setText("");
-                                    userFname.setText("");
-                                    userLname.setText("");
-                                    userMobNo.setText("");
-                                    selectedItems.clear();
+                if (userFname.getText().toString().trim().length()>0 &&
+                        userLname.getText().toString().trim().length()>0 &&
+                        userMobNo.getText().toString().trim().length()>0 &&
+                        userid.getText().toString().trim().length()>0 &&
+                        useremail.getText().toString().trim().length()>0 &&
+                        userpassword.getText().toString().trim().length()>0 &&
+                        selectedItems.size()!=0
+                ){
 
-                                    Toast.makeText(getApplicationContext(),"User Created Successfully!",Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(user_add.this, AddUserFragment.class));
-                                }
-                                else
-                                {
-                                    Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
 
+                    progressDialog.show();
+                    auth.createUserWithEmailAndPassword(useremail.getText().toString(), userpassword.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressDialog.dismiss();
+                                    if (task.isSuccessful()) {
+                                        User user = new User(userid.getText().toString(), useremail.getText().toString(), userpassword.getText().toString(),
+                                                userFname.getText().toString(), userLname.getText().toString(), userMobNo.getText().toString(), selectedItems);
+                                        String id = task.getResult().getUser().getUid();
+                                        database.getReference().child("Users").child(id).setValue(user);
+                                        useremail.setText("");
+                                        userid.setText("");
+                                        userpassword.setText("");
+                                        userFname.setText("");
+                                        userLname.setText("");
+                                        userMobNo.setText("");
+                                        selectedItems.clear();
+
+                                        Toast.makeText(getApplicationContext(), "User Created Successfully!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(user_add.this, AdminMainActivity.class));
+//
+//                                        FragmentManager manager = getFragmentManager();
+//                                        FragmentTransaction transaction = manager.beginTransaction();
+//                                        transaction.add(R.id.container,AddUserFragment.class,YOUR_FRAGMENT_STRING_TAG);
+//                                        transaction.addToBackStack(null);
+//                                        transaction.commit();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please enter all details", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

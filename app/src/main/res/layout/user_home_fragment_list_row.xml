@@ -21,6 +21,7 @@
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:id="@+id/nameT"
+        android:layout_marginLeft="10dp"
         android:text="Data Structures"
         />
 

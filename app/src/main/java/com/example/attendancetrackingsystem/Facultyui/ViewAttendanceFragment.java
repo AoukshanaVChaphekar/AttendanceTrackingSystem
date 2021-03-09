@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.attendancetrackingsystem.Facultyui.Students.StudentFragment;
 import com.example.attendancetrackingsystem.Facultyui.home.HomeFragment;
 import com.example.attendancetrackingsystem.MainActivity;
 import com.example.attendancetrackingsystem.Models.Subject;
@@ -40,16 +41,16 @@ import java.util.Date;
 
 public class ViewAttendanceFragment extends Fragment {
 
-   public static EditText startDate;
-  public static EditText endDate;
-    RelativeLayout startLayout;
-    RelativeLayout endLayout;
-
-
+    public static EditText startDate;
+    public static EditText endDate;
     Button getAttendance;
+    ArrayList<Subject> list=new ArrayList<>();
+    ArrayList<Subject> subjectArrayList=new ArrayList<>();
 
+    FirebaseDatabase database;
+    DatabaseReference databaseReference;
 
-   static ArrayList<Subject > subjects= HomeFragment.getSubName();
+    String fid;
     Spinner spinner;
     int position;
 
@@ -60,25 +61,33 @@ public class ViewAttendanceFragment extends Fragment {
         View root= inflater.inflate(R.layout.faculty_fragment_view_attendance, container, false);
         startDate=root.findViewById(R.id.startDate);
         endDate=root.findViewById(R.id.endDate);
-        startLayout=root.findViewById(R.id.startLayout);
-        endLayout=root.findViewById(R.id.endLayout);
         getAttendance=root.findViewById(R.id.getAttendanceButton);
 
 
         spinner=root.findViewById(R.id.spinnerViewAtt);
 
-        String[] lists=new String[subjects.size()+1];
-        lists[0]="Select Course";
-        for(int i=0;i<lists.length-1;i++)
-        {
-            lists[i+1]=subjects.get(i).getCode()+" - "+subjects.get(i).getName();
-        }
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_spinner_item,lists);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dataAdapter.notifyDataSetChanged();
-        spinner.setAdapter(dataAdapter);
+
+        view(new callBackViewAttendance() {
+            @Override
+            public void OnCallBack(ArrayList<Subject> list) {
+                subjectArrayList=list;
+                String[] lists=new String[subjectArrayList.size()+1];
+                lists[0]="Select Course";
+                for(int i=0;i<lists.length-1;i++)
+                {
+                    lists[i+1]=subjectArrayList.get(i).getCode()+" - "+subjectArrayList.get(i).getName();
+                }
+
+                ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_spinner_item,lists);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                dataAdapter.notifyDataSetChanged();
+                spinner.setAdapter(dataAdapter);
+
+            }
+        });
+
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -98,9 +107,6 @@ public class ViewAttendanceFragment extends Fragment {
         });
 
 
-        //Date
-
-
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +116,10 @@ public class ViewAttendanceFragment extends Fragment {
         endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(startDate.getText().toString().length()>0)
                 showToDatePickerDialog(view);
+                else
+                    Toast.makeText(getContext(),"Enter start date",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -118,20 +127,86 @@ public class ViewAttendanceFragment extends Fragment {
         getAttendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String code=subjects.get(position-1).getCode();
-                String sDate=startDate.getText().toString();
-                String eDate=endDate.getText().toString();
-                Intent intent=new Intent(getActivity(), viewAttendanceCourseWise.class);
-                intent.putExtra("code",code);
-                intent.putExtra("Start",sDate);
-                intent.putExtra("End",eDate);
+                if (endDate.getText().toString().length() > 0 && position!=0 && startDate.getText().toString().length()>0) {
+                    String code = subjectArrayList.get(position - 1).getCode();
+                    String sDate = startDate.getText().toString();
+                    String eDate = endDate.getText().toString();
+                    Intent intent = new Intent(getActivity(), viewAttendanceCourseWise.class);
+                    intent.putExtra("code", code);
+                    intent.putExtra("Start", sDate);
+                    intent.putExtra("End", eDate);
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"Please fill details",Toast.LENGTH_SHORT).show();
+                }
             }
+
         });
 
         return root;
 
+    }
+
+    public void view(callBackViewAttendance callBack)
+    {
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
+        String email=firebaseUser.getEmail();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Faculty");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    if(snapshot1.child("email").getValue().toString().equalsIgnoreCase(email))
+                    {
+                        fid=snapshot1.child("fid").getValue().toString();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("Subject");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for(DataSnapshot snapshot1:snapshot.getChildren())
+                {
+                    ArrayList<String> fids= (ArrayList<String>) snapshot1.child("fid").getValue();
+                    if(fids.contains(fid))
+                    {
+                        String subCode=snapshot1.child("code").getValue().toString();
+                        String subName=snapshot1.child("name").getValue().toString();
+                        list.add(new Subject(subName,subCode));
+
+                    }
+                }
+                callBack.OnCallBack(list);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Error",error.getMessage());
+            }
+        });
+
+    }
+
+    private interface callBackViewAttendance{
+        void OnCallBack(ArrayList<Subject> list);
     }
 
 
@@ -157,13 +232,12 @@ public class ViewAttendanceFragment extends Fragment {
             DatePickerDialog datePickerDialog;
             Log.d("Month", String.valueOf(month)) ;
 
-            datePickerDialog = new DatePickerDialog(getActivity(),this, year,
+            datePickerDialog = new DatePickerDialog(getActivity(),R.style.DialogTheme,this, year,
                     month,day);
             return datePickerDialog;
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
             startDate.setText(day + "/" + (month+1)  + "/" + year);
         }
 
@@ -185,7 +259,7 @@ public class ViewAttendanceFragment extends Fragment {
             c.set(year,month,day);
             Log.d("Month", String.valueOf(month)) ;
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),this, year,month,day);
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),R.style.DialogTheme,this, year,month,day);
             datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
             return datePickerDialog;
         }

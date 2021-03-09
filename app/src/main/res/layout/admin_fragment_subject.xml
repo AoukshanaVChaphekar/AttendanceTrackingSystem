@@ -14,6 +14,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/SrecyclerView"
+        android:layout_margin="10dp"
         />
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSubjectButton"
@@ -23,9 +24,9 @@
         app:srcCompat="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/blueBackground"
-        android:backgroundTint="@color/blueBackground"
-
+        android:backgroundTint="@color/black"
+        android:tint="@color/cardview_light_background"
+        android:layout_margin="20dp"
         />
 
 

@@ -19,7 +19,7 @@
           android:id="@+id/uIdTextView"
           android:layout_marginTop="10dp"
           android:text="User id"
-          android:textSize="28sp"
+          android:textSize="24sp"
           />
 
         <RadioGroup
@@ -38,10 +38,11 @@
                 android:layout_height="wrap_content"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
-                android:layout_marginLeft="20dp"
                 android:id="@+id/truePresent"
                 android:layout_marginRight="40dp"
+                android:layout_marginLeft="20dp"
                 android:text="Present"
+                android:buttonTint="@color/black"
                 />
             <RadioButton
 
@@ -50,7 +51,7 @@
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 android:id="@+id/falseAbsent"
-
+                android:buttonTint="@color/black"
                 android:text="Absent"
 
                 />

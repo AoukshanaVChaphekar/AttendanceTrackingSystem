@@ -7,6 +7,7 @@ import android.view.Menu;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -19,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 public class AdminMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class AdminMainActivity extends AppCompatActivity implements NavigationVi
         NavigationUI.setupWithNavController(navigationView, navController);
 
 
+        
 
 
     }
